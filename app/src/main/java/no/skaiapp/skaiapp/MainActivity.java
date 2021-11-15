@@ -13,11 +13,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+
+    // GsonRequest
+    private Gson gson = new Gson();
 
     private boolean flippy;
     private TextView textView;
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         flippy = true;
+
+        String andrea = "andrea";
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
