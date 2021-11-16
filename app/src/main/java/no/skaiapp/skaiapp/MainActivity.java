@@ -95,11 +95,9 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println(response);
                 Gson gson = new Gson();
                 Jod jod = gson.fromJson(response.toString(), Jod.class);
                 setJokeText(jod.contents.jokes.get(0).joke.text);
-                System.out.println(jod.contents.jokes.get(0).joke.text);
 
             }
         }, new Response.ErrorListener(){
