@@ -11,29 +11,72 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+
+class Success{
+    public int total;
+}
+
+class Joke2{
+    public String title;
+    public String lang;
+    public String length;
+    public String clean;
+    public String racial;
+    public String date;
+    public String id;
+    public String text;
+}
+
+class Joke{
+    public String description;
+    public String language;
+    public String background;
+    public String category;
+    public String date;
+    public Joke2 joke;
+}
+
+class Contents{
+    public List<Joke> jokes;
+    public String copyright;
+}
+
+class Jod{
+    public Success success;
+    public Contents contents;
+}
+
 
 public class MainActivity extends AppCompatActivity {
-
-    // GsonRequest
-    private Gson gson = new Gson();
-
     private boolean flippy;
     private TextView textView;
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
     private String date;
     private TextView dateTimeDisplay;
+    private Response.ErrorListener eL;
+
+    private String jokeText;
+
+    private String getJokeText() {
+        return this.jokeText;
+    }
+
+    public void setJokeText(String newJokeText){
+        this.jokeText = newJokeText;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         flippy = true;
-
-        String andrea = "andrea";
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -49,10 +92,15 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://api.jokes.one/jod";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+        JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>(){
             @Override
-            public void onResponse(String response) {
-                System.out.println(response.substring(0, 400));
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+                Gson gson = new Gson();
+                Jod jod = gson.fromJson(response.toString(), Jod.class);
+                setJokeText(jod.contents.jokes.get(0).joke.text);
+                System.out.println(jod.contents.jokes.get(0).joke.text);
+
             }
         }, new Response.ErrorListener(){
             @Override
@@ -64,12 +112,12 @@ public class MainActivity extends AppCompatActivity {
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                queue.add(stringRequest);
-                System.out.println("Hello, world!");
+                queue.add(jsonObject);
+                System.out.println("Wanna hear a joke?");
                 if (flippy) {
-                    textView.setText("Aslak e best!");
+                    textView.setText(getJokeText());
                 } else {
-                    textView.setText("Ingen protest!");
+                    textView.setText("Wanna hear a joke?");
                 }
                 flippy = !flippy;
             }
