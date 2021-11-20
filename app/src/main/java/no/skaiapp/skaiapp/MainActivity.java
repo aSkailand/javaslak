@@ -1,12 +1,10 @@
 package no.skaiapp.skaiapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,44 +12,25 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-class Success{
-    public int total;
-}
-
-class Joke2{
-    public String title;
-    public String lang;
-    public String length;
-    public String clean;
-    public String racial;
-    public String date;
-    public String id;
+class JokeWrapper{
     public String text;
 }
 
 class Joke{
-    public String description;
-    public String language;
-    public String background;
-    public String category;
-    public String date;
-    public Joke2 joke;
+    public JokeWrapper joke;
 }
 
 class Contents{
     public List<Joke> jokes;
-    public String copyright;
+
 }
 
 class Jod{
-    public Success success;
     public Contents contents;
 }
 
