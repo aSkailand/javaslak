@@ -1,6 +1,8 @@
 package no.skaiapp.skaiapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private String date;
     private TextView dateTimeDisplay;
     private Response.ErrorListener eL;
-
     private String jokeText;
+    private Button playerButton;
 
     private String getJokeText() {
         return this.jokeText;
@@ -53,12 +55,31 @@ public class MainActivity extends AppCompatActivity {
     public void setJokeText(String newJokeText){
         this.jokeText = newJokeText;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        flippy = true;
-
         super.onCreate(savedInstanceState);
+        flippy = false;
+
+
+
+
+
+
+
         setContentView(R.layout.activity_main);
+
+
+
+        playerButton = (Button) findViewById(R.id.playerButton);
+        playerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity();
+            }
+        });
+
+        
 
         dateTimeDisplay = (TextView)findViewById(R.id.dateTimeDisplay);
         calendar = Calendar.getInstance();
@@ -89,16 +110,18 @@ public class MainActivity extends AppCompatActivity {
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                queue.add(jsonObject);
-                System.out.println("Wanna hear a joke?");
-                if (flippy) {
-                    textView.setText(getJokeText());
-                } else {
-                    textView.setText("Wanna hear a joke?");
-                }
-                flippy = !flippy;
+                textView.setText(getJokeText());
             }
         });
-
+        queue.add(jsonObject);
     }
+
+    public void openActivity() {
+        Intent intent = new Intent(this, PlayerActivity.class);
+        startActivity(intent);
+    }
+    public MainActivity() {
+    System.out.println("Aslak e best 1.0.0");
+    }
+
 }
